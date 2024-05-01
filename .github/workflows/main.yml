@@ -1,5 +1,8 @@
 name: thedevcloud-Actions
 on: workflow_dispatch
+env:
+  AWS_REGION: eu-west-2
+  ECR_REPO: thedevcloud-app
 jobs:
   Testing:
     runs-on: ubuntu-latest
@@ -50,7 +53,7 @@ jobs:
     needs: Testing
     runs-on: ubuntu-latest
     steps:
-      - name: Code checkout
+      - name: Code checkout 
         uses: actions/checkout@v4
 
       - name: Update application.properties file
