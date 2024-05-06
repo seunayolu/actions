@@ -1,13 +1,13 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:eu-west-2:767398114306:task-definition/vproapp-tdef:1",
+    "taskDefinitionArn": "arn:aws:ecs:eu-west-1:767398114306:task-definition/classaction-tkdef:1",
     "containerDefinitions": [
         {
-            "name": "vproapp",
-            "image": "767398114306.dkr.ecr.eu-west-2.amazonaws.com/thedevcloud-app",
+            "name": "classapp",
+            "image": "767398114306.dkr.ecr.eu-west-1.amazonaws.com/classapp",
             "cpu": 0,
             "portMappings": [
                 {
-                    "name": "vproapp-8080-tcp",
+                    "name": "classapp-port",
                     "containerPort": 8080,
                     "hostPort": 8080,
                     "protocol": "tcp",
@@ -24,8 +24,8 @@
                 "logDriver": "awslogs",
                 "options": {
                     "awslogs-create-group": "true",
-                    "awslogs-group": "/ecs/vproapp-tdef",
-                    "awslogs-region": "eu-west-2",
+                    "awslogs-group": "/ecs/classaction-tkdef",
+                    "awslogs-region": "eu-west-1",
                     "awslogs-stream-prefix": "ecs"
                 },
                 "secretOptions": []
@@ -33,7 +33,7 @@
             "systemControls": []
         }
     ],
-    "family": "vproapp-tdef",
+    "family": "classaction-tkdef",
     "executionRoleArn": "arn:aws:iam::767398114306:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
     "revision": 1,
@@ -79,12 +79,7 @@
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
     },
-    "registeredAt": "2024-05-01T16:09:48.456Z",
+    "registeredAt": "2024-05-06T01:09:00.683Z",
     "registeredBy": "arn:aws:iam::767398114306:user/devops@c3",
-    "tags": [
-        {
-            "key": "Name",
-            "value": "vproapp-tdef"
-        }
-    ]
+    "tags": []
 }
