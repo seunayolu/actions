@@ -1,8 +1,8 @@
 name: thedevcloud
 on: workflow_dispatch
 env:
-  AWS_REGION: us-east-2
-  ECR_REPO: devcloud-app
+  AWS_REGION: eu-west-1
+  ECR_REPO: classapp
   ECS_SERVICE: devcloud-svc
   ECS_CLUSTER: devcloud-app
   ECS_TASK_DEF: aws-files/taskdeffile.json
@@ -55,31 +55,31 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_URL }} #OPTIONAL   
        
-  # Build_Image:
-  #   needs:   Maven_Test
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Code checkout
-  #       uses: actions/checkout@v4
+  Build_Image:
+    needs:   Maven_Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v4
 
-  #     - name: Update application.properties file
-  #       run: |
-  #         sed -i "s/^jdbc.username.*$/jdbc.username\=${{ secrets.RDS_USER }}/" src/main/resources/application.properties
-  #         sed -i "s/^jdbc.password.*$/jdbc.password\=${{ secrets.RDS_PASS }}/" src/main/resources/application.properties
-  #         sed -i "s/db01/${{ secrets.RDS_ENDPOINT }}/" src/main/resources/application.properties
+      - name: Update application.properties file
+        run: |
+          sed -i "s/^jdbc.username.*$/jdbc.username\=${{ secrets.RDS_USER }}/" src/main/resources/application.properties
+          sed -i "s/^jdbc.password.*$/jdbc.password\=${{ secrets.RDS_PASS }}/" src/main/resources/application.properties
+          sed -i "s/db01/${{ secrets.RDS_ENDPOINT }}/" src/main/resources/application.properties
 
-  #     - name: Build & Upload image to ECR
-  #       uses: appleboy/docker-ecr-action@master
-  #       with:
-  #         access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #         secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #         registry: ${{ secrets.REGISTRY }}
-  #         repo: ${{ env.ECR_REPO }}
-  #         region: ${{ env.AWS_REGION }}
-  #         tags: latest,${{ github.run_number }}
-  #         daemon_off: false
-  #         dockerfile: ./Dockerfile
-  #         context: ./
+      - name: Build & Upload image to ECR
+        uses: appleboy/docker-ecr-action@master
+        with:
+          access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          registry: ${{ secrets.REGISTRY }}
+          repo: ${{ env.ECR_REPO }}
+          region: ${{ env.AWS_REGION }}
+          tags: latest,${{ github.run_number }}
+          daemon_off: false
+          dockerfile: ./Dockerfile
+          context: ./
   
   # DeployToECS:
   #   needs: Build_Image
